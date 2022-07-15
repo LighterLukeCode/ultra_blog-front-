@@ -23,7 +23,7 @@ export const FullPost = () => {
         alert("Ошибка при получении поста");
       });
   }, []);
-
+  // fsdfsd
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />;
   }
