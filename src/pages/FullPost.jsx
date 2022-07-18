@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
@@ -23,10 +23,11 @@ export const FullPost = () => {
         alert("Ошибка при получении поста");
       });
   }, []);
-  // fsdfsd
+
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />;
   }
+
   return (
     <>
       <Post
@@ -36,32 +37,43 @@ export const FullPost = () => {
         user={data.user}
         createdAt={data.createdAt}
         viewsCount={data.viewCount}
-        commentsCount={3}
+        commentsCount={data.comments.length}
         tags={data.tags}
         isFullPost
       >
         <ReactMarkdown children={data.text} />
       </Post>
       <CommentsBlock
-        items={[
-          {
-            user: {
-              fullName: "Вася Пупкин",
-              avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
-            },
-            text: "Это тестовый комментарий 555555",
-          },
-          {
-            user: {
-              fullName: "Иван Иванов",
-              avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
-            },
-            text: "When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top",
-          },
-        ]}
+        items={
+          data.comments
+          // isLoading
+          //   ? [
+          //       {
+          //         user: {
+          //           fullName: `${data.comments.user?.fullName}`,
+          //           avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
+          //         },
+          //         text: "Это тестовый комментарий 555555",
+          //       },
+          //       {
+          //         user: {
+          //           fullName: "Иван Иванов",
+          //           avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
+          //         },
+          //         text: "When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top",
+          //       },
+          //     ]
+          //   : data.comments.map(obj => {
+          //       ` ${obj?.user}: {
+          //       fullName: ${obj.user?.fullName},
+          //       avatarUrl: ${obj.user?.avatarUrl},
+          //     },
+          //     text: ${obj.text}`;
+          //     })
+        }
         isLoading={false}
       >
-        <Index />
+        <Index items={setData} />
       </CommentsBlock>
     </>
   );

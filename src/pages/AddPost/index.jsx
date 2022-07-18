@@ -13,6 +13,7 @@ import axios from "../../axios.js";
 
 export const AddPost = () => {
   const isAuth = useSelector(selectIsAuth);
+
   const navigate = useNavigate();
   const { id } = useParams();
   const isEditing = Boolean(id);
