@@ -8,11 +8,12 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Skeleton from "@mui/material/Skeleton";
+import Typography from "@mui/material/Typography";
 
 export const CommentsBlock = ({ items, children, isLoading = true }) => {
   return (
     <SideBlock title="Комментарии">
-      <List>
+      <List style={{ overflow: "auto", maxHeight: 300 }}>
         {(isLoading ? [...Array(5)] : items).map((obj, index) => (
           <React.Fragment key={index}>
             <ListItem alignItems="flex-start">
@@ -29,10 +30,12 @@ export const CommentsBlock = ({ items, children, isLoading = true }) => {
                   <Skeleton variant="text" height={18} width={230} />
                 </div>
               ) : (
-                <ListItemText
-                  primary={obj.user.fullName}
-                  secondary={obj.text}
-                />
+                <>
+                  <ListItemText primary={obj.user.fullName} secondary={obj.text} />
+                  <Typography fontSize={10} component="span">
+                    {obj.createdAt?.replace("T", " ").slice(0, 16)}
+                  </Typography>
+                </>
               )}
             </ListItem>
             <Divider variant="inset" component="li" />

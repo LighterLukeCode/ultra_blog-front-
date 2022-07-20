@@ -11,7 +11,7 @@ import axios from "../../axios.js";
 import { useState } from "react";
 
 export const Index = ({ items }) => {
-  console.log(items);
+  const userData = useSelector(state => state.auth.data);
   const isAuth = useSelector(selectIsAuth);
   const [comment, setComment] = useState("");
   const { id } = useParams();
@@ -41,18 +41,18 @@ export const Index = ({ items }) => {
   return (
     <>
       <div className={styles.root}>
-        <Avatar classes={{ root: styles.avatar }} src="https://mui.com/static/images/avatar/5.jpg" />
+        <Avatar classes={{ root: styles.avatar }} src={isAuth ? userData.avatarUrl : ""} />
         <div className={styles.form}>
           <TextField
             value={comment}
             onChange={e => setComment(e.target.value)}
-            label="Написать комментарий"
+            label={isAuth ? "Написать комментарий" : "Авторизуйтесь, чтобы оставить комментарий"}
             variant="outlined"
             maxRows={10}
             multiline
             fullWidth
           />
-          <Button onClick={onSubmit} variant="contained">
+          <Button disabled={!isAuth} onClick={onSubmit} variant="contained">
             Отправить
           </Button>
         </div>

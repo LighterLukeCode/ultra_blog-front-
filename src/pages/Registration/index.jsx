@@ -69,9 +69,9 @@ export const Registration = () => {
         <TextField
           className={styles.field}
           label="Пароль"
-          error={Boolean(errors.password?.message)}
+          error={errors.password?.message}
           helperText={errors.password?.message}
-          {...register("password", { required: "Укажите пароль" })}
+          {...register("password", { required: "Укажите пароль минимум 6 символов" })}
           fullWidth
         />
         <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>

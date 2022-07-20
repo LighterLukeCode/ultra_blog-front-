@@ -15,6 +15,16 @@ export const fetchRemovePost = createAsyncThunk("posts/fetchRemovePost", async i
   await axios.delete(`/posts/${id}`);
 });
 
+export const fetchTopPosts = createAsyncThunk("posts/fetchTopPosts", async () => {
+  const { data } = await axios.get("/posts/top");
+  return data;
+});
+
+export const fetchNewPosts = createAsyncThunk("posts/fetchNewPosts", async () => {
+  const { data } = await axios.get("/posts/date");
+  return data;
+});
+
 const initialState = {
   posts: {
     items: [],
@@ -58,6 +68,32 @@ const postsSlice = createSlice({
 
     [fetchRemovePost.pending]: (state, action) => {
       state.posts.items = state.posts.items.filter(obj => obj._id !== action.meta.arg);
+    },
+
+    [fetchTopPosts.pending]: state => {
+      state.posts.items = [];
+      state.posts.status = "loading";
+    },
+    [fetchTopPosts.fulfilled]: (state, action) => {
+      state.posts.items = action.payload;
+      state.posts.status = "loaded";
+    },
+    [fetchTopPosts.rejected]: state => {
+      state.posts.items = [];
+      state.posts.status = "error";
+    },
+
+    [fetchNewPosts.pending]: state => {
+      state.posts.items = [];
+      state.posts.status = "loading";
+    },
+    [fetchNewPosts.fulfilled]: (state, action) => {
+      state.posts.items = action.payload;
+      state.posts.status = "loaded";
+    },
+    [fetchNewPosts.rejected]: state => {
+      state.posts.items = [];
+      state.posts.status = "error";
     },
   },
 });

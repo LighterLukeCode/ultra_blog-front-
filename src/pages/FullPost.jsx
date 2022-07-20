@@ -35,7 +35,7 @@ export const FullPost = () => {
         title={data.title}
         imageUrl={data.imageUrl ? `http://localhost:4444${data.imageUrl}` : ""}
         user={data.user}
-        createdAt={data.createdAt}
+        createdAt={data.createdAt.replace("T", " ").slice(0, 16)}
         viewsCount={data.viewCount}
         commentsCount={data.comments.length}
         tags={data.tags}
